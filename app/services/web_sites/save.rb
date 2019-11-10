@@ -11,8 +11,8 @@ module WebSites
       
       if @web_site.nil?
         if load_title
-          if creator.process
-            @web_site = creator.web_site
+          if creator
+            @web_site
           else
             @errors = [:create, creator.errors]
           end
@@ -20,8 +20,8 @@ module WebSites
           false
         end
       else
-        if updater.process
-          true
+        if updater
+          @web_site
         else
           @errors = [:update, @updater.errors]
         end
@@ -61,7 +61,15 @@ module WebSites
     end
 
     def updater
-      updater ||= Update.new(@web_site.id)
+      @web_site = WebSite.find(@web_site.id)
+      counter = @web_site.counter
+      @web_site.counter = counter + 1
+
+      if @web_site.valid?
+        @web_site.save
+      else
+        @errors = @web_site.errors
+      end
     end
   end
 end

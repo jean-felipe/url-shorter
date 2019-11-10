@@ -1,4 +1,5 @@
 class WebSitesController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: :create
   before_action :load_web_site, only: [:show, :create]
   
   def index
@@ -6,8 +7,9 @@ class WebSitesController < ApplicationController
   end
 
   def create
-    if saver.process
-      render json: saver.web_site, status: 200
+    web_site = saver.process
+    if web_site
+      render json: web_site, status: 200
     else
       render json: saver.errors, status: 422
     end
