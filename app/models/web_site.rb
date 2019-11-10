@@ -16,6 +16,7 @@
 #
 
 class WebSite < ApplicationRecord
+  after_save_commit { UrlListBroadcastJob.perform_now }
   validates :url, :title, :shorted_url, presence: true
   validates :url, uniqueness: true
 

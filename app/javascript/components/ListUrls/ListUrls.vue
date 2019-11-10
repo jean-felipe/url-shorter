@@ -40,7 +40,30 @@ export default {
           this.webSites.push(webSite);
         })
       })
-  }
+
+      this.$cable.subscribe({ channel: 'UrlListChannel' });
+  },
+
+  channels: {
+    UrlListChannel: {
+      connected() {
+        console.log('Connected to channel');
+      },
+			rejected() {
+        console.log('rejected')
+      },
+			received(data) {
+        this.webSites = [];
+        data.data.forEach((webSite) => {
+          this.webSites.push(webSite);
+        })
+       
+      },
+			disconnected() {
+        console.log('desconectado')
+      }
+    }
+  },
 }
 </script>
 

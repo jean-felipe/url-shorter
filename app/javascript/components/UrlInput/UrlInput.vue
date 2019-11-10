@@ -48,6 +48,8 @@ export default {
             this.webSite.title = response.data.title;
             this.successCreated = true;
           })
+      } else {
+        alert('Please paste a valid url')
       }
     },
 

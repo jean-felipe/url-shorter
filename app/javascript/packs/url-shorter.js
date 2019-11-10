@@ -2,7 +2,7 @@ import Vue from 'vue';
 import humps from 'humps';
 
 import Main from '../components/Main/Main.vue';
-// import ActionCableVue from 'actioncable-vue';
+import ActionCableVue from 'actioncable-vue';
 // import "../assets/scss/index.scss";
 
 const parseData = (prop) => {
@@ -12,11 +12,13 @@ const parseData = (prop) => {
     return prop;
   }
 };
-// Vue.use(ActionCableVue, {
-//   debug: true,
-//   debugLevel: 'error',
-//   connectionUrl: 'ws://localhost:3000/cable'
-// });
+
+Vue.use(ActionCableVue, {
+  debug: true,
+  debugLevel: 'error',
+  connectionUrl: 'ws://localhost:3000/cable',
+  connectImmediately: true
+});
 
 
 const init = () => {
