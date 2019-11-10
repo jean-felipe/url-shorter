@@ -1,18 +1,17 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe WebSites::Update do
   describe '#process' do
-    before do
-      let(:web_site) { create(:web_site) }
-    end
-
-    subject(described_class.new(id: id).process)
+    let(:web_site) { create(:web_site, counter: 1) }
+   
+    subject { described_class.new(id) }
 
     context 'when a url is accessed again' do
       let(:id) { web_site.id }
 
       it 'updates the counter for the given web site' do
-        expect { subject }.to change{ web_site.counter }.from(1).to(2)
+        subject.process
+        expect(subject.web_site.counter).to eq(2)
       end
     end
 
@@ -20,7 +19,7 @@ RSpec.describe WebSites::Update do
       let(:id) { 'foo' }
 
       it 'raises an not found error' do
-        expect { subject }.to raise_error(NotFoundError)
+        expect { subject.process }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end
