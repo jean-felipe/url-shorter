@@ -1,24 +1,22 @@
-require 'spec_helper'
+require 'rails_helper'
 
-RSpec.describe WebSiteController do
+RSpec.describe WebSitesController do
   describe '#index' do
     before(:all) do
       create_list(:web_site, 3)
-      create(:web_site, title: 'Google', counter: 10)
+      create(:web_site, title: 'Google', counter: 25)
     end
 
     context 'when listing the most shortened urls' do
       it 'returns an array with the web sites ordered by counter attribute' do
         get :index
-        expect(json.dig('web_sites', 0, 'title')).to eq('Google')
-        expect(json.dig('web_sites').count).to eq(4)
+        expect(json.first.dig('title')).to eq('Google')
+        expect(json.count).to eq(4)
       end
     end
   end
 
   describe '#show' do
-    subject { get :show, params }
-    
     let(:web_site) { create(:web_site, url: 'https://www.youtube.com/') }
 
     context 'when the shortened url is accessed' do
@@ -29,7 +27,9 @@ RSpec.describe WebSiteController do
       end
 
       it 'redirects to the website' do
-        expect(subject).to redirect_to(web_site.url)
+        get :show, params: params
+        expect(response.status).to eq(200)
+        expect(json)
       end
     end
   end
@@ -45,7 +45,7 @@ RSpec.describe WebSiteController do
 
     context 'when send a new url to be shortened' do
       it 'creates the new website' do
-        post :create, params
+        post :create, params: params
         expect(json.dig('web_site', 'title')).to eq('Youtube')
         expect(json.dig('web_site', 'counter')).to eq(1)
         expect(response.status).to eq(201)
@@ -58,7 +58,7 @@ RSpec.describe WebSiteController do
       end
 
       it 'updates the counter to 2' do
-        post :create, params
+        post :create, params: params
         expect(json.dig('web_site', 'title')).to eq('Youtube')
         expect(json.dig('web_site', 'counter')).to eq(2)
         expect(response.status).to eq(200)

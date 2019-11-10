@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe WebSites::Create do
   describe '#process' do
-    subject { described_class.new(url, title) }
+    subject { described_class.new({url: url, title: title}) }
     
     context 'when a new url is sent' do
       let(:url) { 'https://www.youtube.com/watch?v=1EGfjW4adk4' }

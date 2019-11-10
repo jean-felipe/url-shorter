@@ -11,6 +11,7 @@ module WebSites
         @errors = [:url, 'cannot be nil']
       else
         @title = Nokogiri::HTML::Document.parse(HTTParty.get(@url).body).title
+        true
       end
     end
   end

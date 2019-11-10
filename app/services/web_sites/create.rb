@@ -2,9 +2,9 @@ module WebSites
   class Create
     attr_reader :errors, :web_site
 
-    def initialize(url, title)
-      @url = url
-      @title = title
+    def initialize(params)
+      @url = params[:url]
+      @title = params[:title]
     end
 
     def process
