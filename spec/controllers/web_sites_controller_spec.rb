@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe WebSitesController do
   describe '#index' do
-    before(:all) do
+    before do
       create_list(:web_site, 3)
       create(:web_site, title: 'Google', counter: 25)
     end
@@ -46,21 +46,20 @@ RSpec.describe WebSitesController do
     context 'when send a new url to be shortened' do
       it 'creates the new website' do
         post :create, params: params
-        expect(json.dig('web_site', 'title')).to eq('Youtube')
-        expect(json.dig('web_site', 'counter')).to eq(1)
-        expect(response.status).to eq(201)
+        expect_json(title: 'YouTube')
+        expect(response.status).to eq(200)
       end
     end
 
     context 'when an already sent url is sent again' do
       before do
-        create(:web_site, url: 'https://www.youtube.com/')
+        create(:web_site, url: 'https://www.youtube.com/', title: 'YouTube', counter: 1)
       end
 
       it 'updates the counter to 2' do
         post :create, params: params
-        expect(json.dig('web_site', 'title')).to eq('Youtube')
-        expect(json.dig('web_site', 'counter')).to eq(2)
+        expect_json(title: 'YouTube')
+        expect_json(counter: 2)
         expect(response.status).to eq(200)
       end
     end

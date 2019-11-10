@@ -15,7 +15,7 @@
           <td>{{webSite.title}}</td>
           <td>{{webSite.counter}}</td>
           <td>{{webSite.url}}</td>
-          <td>{{webSite.shorted_url}}</td>
+          <td class="shortened-url" @click="moveToUrl(webSite.shorted_url)">{{webSite.shorted_url}}</td>
         </tr>
       </tbody>
     </table>
@@ -64,10 +64,20 @@ export default {
       }
     }
   },
+
+  methods: {
+    moveToUrl(url) {
+      window.location.href = `/${url}`; 
+    }
+  }
 }
 </script>
 
 <style>
+.shortened-url {
+  cursor: pointer;
+}
+
 table, td, th {  
   border: 1px solid #ddd;
   text-align: left;

@@ -16,7 +16,10 @@ class WebSitesController < ApplicationController
   end
 
   def show
-    render json: @web_site, status: 200
+    @props = {
+      component_name: 'open_web_site',
+      component_data: [@web_site.as_json]
+    }
   end
 
   private

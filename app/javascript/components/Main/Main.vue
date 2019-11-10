@@ -8,16 +8,18 @@
 
 <script>
 import UrlInput from '../UrlInput';
+import OpenWebSite from '../OpenWebSite';
 
 const componentDicionary = {
   url_input: UrlInput,
+  open_web_site: OpenWebSite,
 };
 
 export default {
   name: 'Main',
 
   components: {
-    UrlInput
+    UrlInput, OpenWebSite,
   },
 
   data() {
