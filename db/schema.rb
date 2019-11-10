@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2019_11_10_010956) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "web_sites", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "url", null: false
+    t.string "shorted_url", null: false
+    t.integer "counter", default: 1
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["url"], name: "index_web_sites_on_url"
+  end
 
 end

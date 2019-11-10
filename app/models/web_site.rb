@@ -15,11 +15,8 @@
 #  index_web_sites_on_url  (url)
 #
 
-FactoryBot.define do
-  factory :web_site do
-    title { Faker::Superhero.name }
-    url { Faker::Internet.url }
-    shorted_url { SecureRandom.hex(2) }
-    counter { Faker::Number.between(from: 1, to: 10) }
-  end
+class WebSite < ApplicationRecord
+  validates :url, :title, :shorted_url, presence: true
+  validates :url, uniqueness: true
+
 end
